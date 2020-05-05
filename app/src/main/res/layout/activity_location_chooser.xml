@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".LocationChooser">
+
+    <Button
+        android:layout_below="@+id/view_flipper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/action_bar"
+        android:typeface="serif"
+        android:text="Choose States &amp; Districts"
+        android:textColor="#fff"
+        android:id="@+id/tag_line"
+        android:textSize="16dp"/>
+
+
+    <TextView
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please Choose States &amp; Districts Below"
+        android:textSize="25sp"
+        android:typeface="serif"
+        android:gravity="center"
+        android:textColor="#333"
+        android:layout_marginTop="35dp"
+        android:id="@+id/text_review"/>
+
+
+    <Spinner
+        android:id="@+id/state_spinnerZ"
+        android:background="@drawable/edittext_background"
+        android:padding="10dp"
+        android:entries="@array/country_state"
+        android:textAlignment="center"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="25dp"
+        android:theme="@style/MyTheme"
+        android:textColor="#000"
+        android:layout_marginStart="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+    </Spinner>
+
+    <Spinner
+        android:id="@+id/district_chooserZ"
+        android:background="@drawable/edittext_background"
+        android:padding="10dp"
+        android:textAlignment="center"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="25dp"
+        android:textColor="#000"
+        android:visibility="visible"
+        android:theme="@style/MyTheme"
+        android:layout_marginStart="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+    </Spinner>
+
+    <Button
+        android:background="@drawable/gradient_button_main"
+        android:textColor="#fff"
+        android:textSize="17sp"
+        android:textAllCaps="false"
+        android:id="@+id/dac"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginStart="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Next"/>
+
+
+</LinearLayout>

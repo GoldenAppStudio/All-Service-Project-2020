@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_contact_us"
+            android:icon="@drawable/contact_us"
+            android:title="Contact Us"
+            />
+        <item
+            android:id="@+id/nav_notification"
+            android:icon="@drawable/notification"
+            android:title="Notification" />
+        <item
+            android:id="@+id/nav_exit"
+            android:icon="@drawable/exit"
+            android:title="Exit From App" />
+        </group>
+    <item android:title="Show Your Business Ads In App">
+        <menu>
+            <item android:id="@+id/in_app_ads"
+                android:icon="@drawable/in_app_ads"
+                android:title="In-App Ads ">
+            </item>
+        </menu>
+    </item>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_rate_us"
+                android:icon="@drawable/rate_us_like"
+                android:title="Rate Us" />
+            <item
+                android:id="@+id/nav_report_bug"
+                android:icon="@drawable/report_bug"
+                android:title="Report Bug" />
+
+            <item
+                android:id="@+id/nav_developer"
+                android:icon="@drawable/dev"
+                android:title="Developers" />
+        </menu>
+    </item>
+
+</menu>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dip"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip">
+
+        <ImageView
+            android:layout_marginTop="13dp"
+            android:id="@+id/list_icon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/thumbnail"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:paddingLeft="25dp"
+            android:padding="15dp"
+            android:textColor="#040404"
+            android:typeface="sans"
+            android:text="Name "
+            android:textSize="15dip"
+            android:textStyle="bold"/>
+
+
+    </LinearLayout>
+
+    <!-- Title Of Song-->
+
+
+</RelativeLayout>

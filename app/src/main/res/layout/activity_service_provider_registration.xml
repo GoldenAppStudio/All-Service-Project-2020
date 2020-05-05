@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/scroll"
+    android:layout_height="match_parent"
+    android:background="#f5f9fc"
+    tools:context=".ServiceProviderRegistration">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/action_bar"
+            android:text="Fill Registration From"
+            android:textColor="#fff"
+            android:textSize="18dp"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/setup_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/choose"
+            app:civ_border_color="#999999"
+            app:civ_border_width="2dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tap to choose Your Image/Logo "
+            android:layout_gravity="center"
+            android:typeface="sans"
+            android:textColor="#474B4F"/>
+
+        <TextView
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_width="wrap_content"
+            android:typeface="sans"
+            android:layout_height="wrap_content"
+            android:text="Owner Name "
+            android:textColor="#474B4F"
+            />
+
+        <EditText
+            android:typeface="sans"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:id="@+id/owner_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Full Name"
+            android:textColorHint="#565C61"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"/>
+
+        <TextView
+            android:typeface="sans"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Company Name *"
+            android:textColor="#474B4F"/>
+
+        <EditText
+            android:typeface="sans"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Company Name"
+            android:textColorHint="#565C61"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"/>
+
+        <TextView
+            android:typeface="sans"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Your Service *"
+            android:textColor="#474B4F"/>
+
+        <Spinner
+            android:typeface="sans"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:id="@+id/spinner_service"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/country_state"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            android:prompt="@string/state"
+            />
+
+        <TextView
+            android:typeface="sans"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Choose Your Sub-Service *"
+            android:textColor="#474B4F"/>
+
+        <Spinner
+            android:typeface="sans"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:id="@+id/spinner_sub_service"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/country_state"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            />
+
+        <TextView
+            android:typeface="sans"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email *"
+            android:textColor="#474B4F"
+            android:layout_marginTop="15dp"/>
+        <EditText
+            android:typeface="sans"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            android:hint="Email"
+            android:textColorHint="#565C61"/>
+
+        <TextView
+            android:typeface="sans"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose State *"
+            android:layout_marginTop="15dp"
+            android:textColor="#474B4F"
+            />
+
+        <Spinner
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:id="@+id/spinner_state"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/country_state"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            />
+
+        <TextView
+            android:typeface="sans"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="City *"
+            android:textColor="#474B4F"
+            android:layout_marginTop="15dp"/>
+        <Spinner
+            android:typeface="sans"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:id="@+id/spinner_city"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/country_state"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            />
+
+        <TextView
+            android:typeface="sans"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Street Address *"
+            android:textColor="#474B4F"/>
+        <EditText
+            android:typeface="sans"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:id="@+id/edit_text_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Address"
+            android:textColorHint="#565C61"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"/>
+
+        <TextView
+            android:typeface="sans"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phone *"
+            android:textColor="#474B4F"
+            android:layout_marginTop="15dp"/>
+
+        <EditText
+            android:typeface="sans"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:id="@+id/edit_text_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Phone Number"
+            android:maxLength="10"
+            android:inputType="phone"
+            android:textColorHint="#565C61"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"/>
+
+        <TextView
+            android:typeface="sans"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description *"
+            android:textColor="#474B4F"
+            android:layout_marginTop="15dp"/>
+        <EditText
+            android:typeface="sans"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:id="@+id/edit_text_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:textColorHint="#565C61"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"/>
+
+
+        <Button
+            android:typeface="sans"
+            android:background="@drawable/gradient_button_main"
+            android:textColor="#fff"
+            android:textSize="18dp"
+            android:id="@+id/registration_submit"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="Submit"
+            />
+
+    </LinearLayout>
+
+</ScrollView>

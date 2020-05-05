@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+
+    <ImageView
+        android:src="@drawable/phone"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:id="@+id/text_authentication"/>
+
+
+    <TextView
+        android:id="@+id/text_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_authentication"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25sp"
+        android:textColor="#222"
+        android:text="Please Enter Your Phone Number And Continue.\n You don't have to enter verification code manually "
+        android:textAlignment="center"
+        android:textSize="15dp"
+         />
+
+
+
+    <EditText
+        android:id="@+id/phoneno"
+        android:layout_below="@+id/text_info"
+        android:background="@drawable/edittext_background_main"
+        android:padding="10dp"
+        android:layout_marginTop="25dp"
+        android:textColor="#222"
+        android:layout_marginEnd="40dp"
+        android:inputType="number"
+        android:maxLength="10"
+        android:layout_marginStart="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Phone Number..."
+        />
+
+    <EditText
+        android:id="@+id/vc"
+        android:layout_below="@+id/text_info"
+        android:background="@drawable/edittext_background_main"
+        android:padding="10dp"
+        android:visibility="invisible"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="40dp"
+        android:textColor="#222"
+        android:inputType="number"
+        android:layout_marginStart="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Verification Code"/>
+
+
+
+    <Button
+        android:background="@drawable/gradient_button_main"
+        android:textColor="#fff"
+        android:id="@+id/phone_submit"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="10dp"
+        android:visibility="visible"
+        android:layout_marginStart="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/phoneno"
+        android:text="CONtinue"
+        android:textSize="20dp"
+        />
+
+    <Button
+        android:background="@drawable/gradient_button_main"
+        android:textColor="#fff"
+        android:id="@+id/vc_submit"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/phoneno"
+        android:text="Submit"/>
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:layout_below="@+id/phoneno"
+        android:visibility="invisible"
+        android:id="@+id/progressBar"
+        app:SpinKit_Color="@color/sky"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true"
+        style="@style/SpinKitView.Large.FadingCircle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
