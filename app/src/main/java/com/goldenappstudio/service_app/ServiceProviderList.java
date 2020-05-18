@@ -1,116 +1,127 @@
 package com.goldenappstudio.service_app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class ServiceProviderList extends AppCompatActivity {
 
-    // Array of strings storing country names
-    String[] countries = new String[] {
-            "Trips & Adventure",
-            "Hotels",
-            "Flights",
-            "Trains",
-            "Bus Service",
-            "Cab & Taxi",
-            "Cruise Ships & Yachts" ,
-            "Trips & Adventure",
-            "Hotels",
-            "Flights",
-            "Trains",
-            "Bus Service",
-            "Cab & Taxi",
-            "Cruise Ships & Yachts"
-    };
-
-    // Array of integers points to images stored in /res/drawable-ldpi/
-    int[] flags = new int[]{
-            R.drawable.travel,
-            R.drawable.hotel,
-            R.drawable.plane,
-            R.drawable.trai,
-            R.drawable.bus,
-            R.drawable.cab,
-            R.drawable.ship,
-            R.drawable.travel,
-            R.drawable.hotel,
-            R.drawable.plane,
-            R.drawable.trai,
-            R.drawable.bus,
-            R.drawable.cab,
-            R.drawable.ship
-    };
-
-
+    DatabaseReference databaseReference;
+    ProgressDialog progressDialog;
+    List<ServiceProvider> list = new ArrayList<>();
+    RecyclerView recyclerView;
+    ServiceProviderRecycler adapter ;
+    EditText search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_provider_list);
+        getSupportActionBar().setTitle("Service Providers...");
+        search = findViewById(R.id.service_provider_search);
 
+        recyclerView = findViewById(R.id.service_provider_recycler);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(ServiceProviderList.this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(ServiceProviderList.this, DividerItemDecoration.VERTICAL));
 
+        progressDialog = new ProgressDialog(ServiceProviderList.this);
+        progressDialog.setMessage("Loading Data from Database");
+        progressDialog.show();
 
-        getSupportActionBar().setTitle("Service Providers");
-        List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
-
-        for(int i=0;i<14;i++){
-            HashMap<String, String> hm = new HashMap<String,String>();
-            hm.put("txt",  countries[i]);
-            hm.put("flag", Integer.toString(flags[i]) );
-            aList.add(hm);
-        }
-
-        // Keys used in Hashmap
-        String[] from = { "flag","txt"};
-
-        // Ids of views in listview_layout
-        int[] to = { R.id.images,R.id.text_sub_service};
-
-        // Instantiating an adapter to store each items
-        // R.layout.listview_layout defines the layout of each item
-        SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), aList, R.layout.custom_layout_service_providers, from, to);
-
-        // Getting a reference to listview of main.xml layout file
-        ListView listView = ( ListView ) findViewById(R.id.list_view_sub_service);
-
-        // Setting the adapter to the listView
-        listView.setAdapter(adapter);
-        AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
+        databaseReference = FirebaseDatabase.getInstance().getReference("service_providers/");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View container, int position, long id) {
-                // Getting the Container Layout of the ListView
-                /*LinearLayout linearLayoutParent = (LinearLayout) container;
-                // Getting the inner Linear Layout
-                LinearLayout linearLayoutChild = (LinearLayout) linearLayoutParent.getChildAt(1);
-                // Getting the Country TextView
-                TextView tvCountry = (TextView) linearLayoutChild.getChildAt(0);
-                Toast.makeText(getBaseContext(), tvCountry.getText().toString(), Toast.LENGTH_SHORT).show();*/
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if(dataSnapshot.child("service").getValue().toString().equals(CaptionedImagesAdapter.SERVICE_UID)
+                            && dataSnapshot.child("sub_service").getValue().toString().equals(SubServiceRecycler.SUB_SERVICE_UID)
+                            && dataSnapshot.child("state").getValue().toString().equals(LocationChooser.PROVINCE)
+                            && dataSnapshot.child("district").getValue().toString().equals(LocationChooser.COUNTY)) {
+                        ServiceProvider serviceProvider = dataSnapshot.getValue(ServiceProvider.class);
+                        list.add(serviceProvider);
+                    }
+                }
 
-
-                Intent intent = new Intent(ServiceProviderList.this,ServiceProviderProfile.class);
-                startActivity(intent);
+                adapter = new ServiceProviderRecycler(getApplicationContext(), list);
+                recyclerView.setAdapter(adapter);
+                progressDialog.dismiss();
             }
-        };
 
-        // Setting the item click listener for the listview
-        listView.setOnItemClickListener(itemClickListener);
-        Animation animation = AnimationUtils.loadAnimation(ServiceProviderList.this,R.anim.fade_in);
-        listView.startAnimation(animation);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                progressDialog.dismiss();
+            }
+        });
 
+
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(ServiceProviderList.this, SubServiceActivity.class));
+        finish();
+    }
+
+    private void filter(String text) {
+        //new array list that will hold the filtered data
+        ArrayList<ServiceProvider> filterdNames = new ArrayList<>();
+
+        //looping through existing elements
+        for (ServiceProvider s : list) {
+            //if the existing elements contains the search input
+            if (s.getName().toLowerCase().contains(text.toLowerCase())) {
+                //adding the element to filtered list
+                filterdNames.add(s);
+            }
+        }
+        //calling a method of the adapter class and passing the filtered list
+        adapter.filterList(filterdNames);
     }
 }

@@ -1,37 +1,21 @@
 package com.goldenappstudio.service_app;
 
 public class Service {
-    private String name;
-    private int imageResourceId;
-    public static final Service[] services = {
-            new Service("Bus Service", R.drawable.bus_service),
-            new Service("Plumber", R.drawable.plumber),
-            new Service("Hospital",R.drawable.hospital_img),
-            new Service("Hospital",R.drawable.hospital_img),
-            new Service("Hospital",R.drawable.hospital_img),
-            new Service("Hospital",R.drawable.hospital_img),
-            new Service("Hospital",R.drawable.hospital_img),
-            new Service("Hospital",R.drawable.hospital_img),
-            new Service("Hospital",R.drawable.hospital_img),
-            new Service("Hospital",R.drawable.hospital_img),
-            new Service("Hospital",R.drawable.hospital_img),
-            new Service("Hospital",R.drawable.hospital_img),
-            new Service("Hospital",R.drawable.hospital_img),
-            new Service("Hospital",R.drawable.hospital_img),
-            new Service("Hospital",R.drawable.hospital_img),
-            
-    };
-    private Service(String name, int imageResourceId) {
-        this.name = name;
-        this.imageResourceId = imageResourceId;
-    }
-    public String getName() {
-        return name;
-    }
-    public int getImageResourceId() {
-        return imageResourceId;
+    private String service_name;
+    private String UID;
+
+    public Service() {
+
     }
 
+    public Service(String service_name, String UID) {
+        this.service_name = service_name;
+        this.UID = UID;
+    }
 
+    public String getService_name() {
+        return service_name;
+    }
 
+    public String getUID() { return UID; }
 }

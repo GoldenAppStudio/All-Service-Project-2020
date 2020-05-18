@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private ProgressBar progressBar;
     String abc;
+    public static String PHONE_NO;
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private FirebaseAuth mAuth;
@@ -57,48 +58,45 @@ public class LoginActivity extends AppCompatActivity {
         vcSubmit = findViewById(R.id.vc_submit);
         progressBar = findViewById(R.id.progressBar);
 
-        phoneSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        phoneSubmit.setOnClickListener(v -> {
 
-                abc = phoneNo.getText().toString();
+            abc = phoneNo.getText().toString();
 
-                if (abc.isEmpty()) {
-                    phoneNo.setError("Phone number is required");
-                    phoneNo.requestFocus();
-                    return;
-                }
+            if (abc.isEmpty()) {
+                phoneNo.setError("Phone number is required");
+                phoneNo.requestFocus();
+                return;
+            }
 
-                if (abc.length() < 10) {
-                    phoneNo.setError("Please enter a valid phone");
-                    phoneNo.requestFocus();
-                    return;
-                }
+            if (abc.length() < 10) {
+                phoneNo.setError("Please enter a valid phone");
+                phoneNo.requestFocus();
+                return;
+            }
 
-                if (!abc.isEmpty() && abc.length() == 10) {
+            if (abc.length() == 10) {
 
-                    PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                            "+91" + abc,        // Phone number to verify
-                            60,                 // Timeout duration
-                            TimeUnit.SECONDS,   // Unit of timeout
-                            LoginActivity.this,               // Activity (for callback binding)
-                            mCallbacks);        // OnVerificationStateChangedCallbacks
+                PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                        "+91" + abc,        // Phone number to verify
+                        60,                 // Timeout duration
+                        TimeUnit.SECONDS,   // Unit of timeout
+                        LoginActivity.this,               // Activity (for callback binding)
+                        mCallbacks);        // OnVerificationStateChangedCallbacks
 
-                    new CountDownTimer(4000, 1000) {
-                        public void onTick(long millisUntilFinished) {
-                            phoneSubmit.setVisibility(View.INVISIBLE);
-                            progressBar.setVisibility(View.VISIBLE);
-                        }
+                new CountDownTimer(4000, 1000) {
+                    public void onTick(long millisUntilFinished) {
+                        phoneSubmit.setVisibility(View.INVISIBLE);
+                        progressBar.setVisibility(View.VISIBLE);
+                    }
 
-                        public void onFinish() {
-                            phoneNo.setVisibility(View.INVISIBLE);
-                            vc.setVisibility(View.VISIBLE);
-                            progressBar.setVisibility(View.INVISIBLE);
-                            vcSubmit.setVisibility(View.VISIBLE);
+                    public void onFinish() {
+                        phoneNo.setVisibility(View.INVISIBLE);
+                        vc.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        vcSubmit.setVisibility(View.VISIBLE);
 
-                        }
-                    }.start();
-                }
+                    }
+                }.start();
             }
         });
 
@@ -117,36 +115,30 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        vcSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String code = vc.getText().toString();
-                if (code.isEmpty()) {
-                    phoneNo.setError("Phone enter verification code");
-                    phoneNo.requestFocus();
-                    return;
-                }
-                PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
-                LoginActivity.this.signInWithPhoneAuthCredential(credential);
+        vcSubmit.setOnClickListener(v -> {
+            String code = vc.getText().toString();
+            if (code.isEmpty()) {
+                phoneNo.setError("Phone enter verification code");
+                phoneNo.requestFocus();
+                return;
             }
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
+            LoginActivity.this.signInWithPhoneAuthCredential(credential);
         });
 
     }
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            LoginActivity.this.sendToMain();
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Something wrong", Toast.LENGTH_SHORT).show();
-                            //  Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                Toast.makeText(LoginActivity.this, "OTP is incorrect", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        LoginActivity.this.sendToMain();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Something wrong", Toast.LENGTH_SHORT).show();
+                        //  Log.w(TAG, "signInWithCredential:failure", task.getException());
+                        if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                            Toast.makeText(LoginActivity.this, "OTP is incorrect", Toast.LENGTH_SHORT).show();
+                            return;
                         }
                     }
                 });

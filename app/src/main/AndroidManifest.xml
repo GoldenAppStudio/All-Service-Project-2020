@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.goldenappstudio.service_app">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -11,10 +13,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ServiceProviderList"
-            android:parentActivityName=".LocationChooser">
-
-        </activity>
+        <activity android:name=".BusChooser"></activity>
+        <activity android:name=".BusFull" />
+        <activity android:name=".BusActivity" />
+        <activity
+            android:name=".ui.login.BusActivity"
+            android:label="@string/title_activity_bus" />
+        <activity android:name=".RequestPending" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity android:name=".GoldenAppStudio" />
+        <activity
+            android:name=".ServiceProviderList"
+            android:parentActivityName=".LocationChooser" />
         <activity
             android:name=".LocationChooser"
             android:parentActivityName=".SubServiceActivity" />
@@ -27,8 +40,9 @@
         <activity
             android:name=".SubServiceActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".ServiceProviderProfile"
-            android:parentActivityName=".ServiceProviderList"/>
+        <activity
+            android:name=".ServiceProviderProfile"
+            android:parentActivityName=".ServiceProviderList" />
         <activity
             android:name=".ServiceProviderRegistration"
             android:parentActivityName=".MainActivity" />

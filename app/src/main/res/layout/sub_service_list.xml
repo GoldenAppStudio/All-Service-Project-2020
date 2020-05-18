@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sub_service_card"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="2dp"
+        android:background="#fff">
+
+        <ImageView
+            android:padding="2dp"
+            android:layout_height="55dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="3dp"
+            android:background="#fff"
+            android:id="@+id/sub_service_image"
+            android:layout_width="55dp"
+            android:src="@drawable/question" />
+
+        <TextView
+            android:layout_centerInParent="true"
+            android:id="@+id/sub_service_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginStart="8dp"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:layout_toEndOf="@+id/sub_service_image" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

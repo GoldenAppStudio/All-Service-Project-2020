@@ -1,68 +1,98 @@
 package com.goldenappstudio.service_app;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
- class CaptionedImagesAdapter extends RecyclerView.Adapter<CaptionedImagesAdapter.ViewHolder>{
-    private String[] captions;
-    private int[] imageIds;
 
-    private Listener listener;
-    public static interface Listener {
-        public void onClick(int position);
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageException;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class CaptionedImagesAdapter extends RecyclerView.Adapter<CaptionedImagesAdapter.ViewHolder> {
+
+    View view;
+    Context context;
+    private List<Service> MainImageUploadInfoList;
+    public static String SERVICE_UID;
+
+    public CaptionedImagesAdapter(Context context, List<Service> TempList) {
+        this.MainImageUploadInfoList = TempList;
+        this.context = context;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
-        private CardView cardView;
-        public ViewHolder(CardView v) {
-            super(v);
-            cardView = v;
-        }
-    }
-    public CaptionedImagesAdapter(String[] captions, int[] imageIds){
-        this.captions = captions;
-        this.imageIds = imageIds;
-    }
-    public void setListener(Listener listener){
-        this.listener = listener;
-    }
+
+
     @Override
-    public CaptionedImagesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        CardView cv = (CardView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.content_main, parent, false);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        return new ViewHolder(cv);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
+
+        ViewHolder viewHolder = new ViewHolder(view);
+
+        return viewHolder;
     }
-    public void onBindViewHolder(ViewHolder holder, final int position){
-        CardView cardView = holder.cardView;
-        ImageView imageView = (ImageView)cardView.findViewById(R.id.info_image);
-        Drawable drawable = cardView.getResources().getDrawable(imageIds[position]);
-        imageView.setImageDrawable(drawable);
-        imageView.setContentDescription(captions[position]);
-        TextView textView = (TextView)cardView.findViewById(R.id.info_text);
-        textView.setText(captions[position]);
 
-        cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onClick(position);
-                }
-            }
+    @Override
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+
+        final Service service = MainImageUploadInfoList.get(position);
+
+        holder.ServiceNameTextView.setText(service.getService_name());
+        Log.d("Service Names adapter", "" + service.getUID());
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference gsReference = storage.getReferenceFromUrl("gs://serviceapp-project.appspot.com/service_images/" + service.getUID() +  ".jpg");
+
+        gsReference.getDownloadUrl().addOnSuccessListener(uri -> Glide.with(context).load(uri.toString()).into(holder.image)).addOnFailureListener(exception -> {
+            StorageReference reference = storage.getReferenceFromUrl("gs://serviceapp-project.appspot.com/service_images/" + ".jpg");
+            reference.getDownloadUrl().addOnSuccessListener(uri -> Glide.with(context).load(uri.toString()).into(holder.image)).addOnFailureListener(e -> {});
+        });
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), SubServiceActivity.class);
+            SERVICE_UID = service.getUID();
+            context.startActivity(intent);
         });
 
     }
+
+
+
     @Override
-    public int getItemCount(){
-        return captions.length;
+    public int getItemCount() {
+
+        return MainImageUploadInfoList.size();
     }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+
+        TextView ServiceNameTextView;
+        ImageView image;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+
+            ServiceNameTextView = itemView.findViewById(R.id.card_text);
+            image = itemView.findViewById(R.id.card_image);
+        }
+    }
+
+    public void filterList(ArrayList<Service> filterdNames) {
+        this.MainImageUploadInfoList = filterdNames;
+        notifyDataSetChanged();
+    }
+
 }
+
+

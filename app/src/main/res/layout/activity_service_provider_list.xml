@@ -4,10 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ServiceProviderList">
 
-    <ListView
+    <EditText
+        android:id="@+id/service_provider_search"
+        android:background="@drawable/edittext_background"
+        android:padding="10dp"
+        android:textColor="#000"
+        android:textSize="13sp"
+        android:hint="Type Name or Place.."
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/list_view_sub_service"/>
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="5dp"
+        android:id="@+id/service_provider_recycler"
+        android:background="#eee"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </LinearLayout>

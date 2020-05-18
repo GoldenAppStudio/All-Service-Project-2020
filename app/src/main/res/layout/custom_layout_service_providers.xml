@@ -1,58 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sub_service_card"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
 
-    <RelativeLayout android:id="@+id/thumbnail"
-        android:layout_width="wrap_content"
+    <!-- TODO: make service provider recycleview large and more attractive -->
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:layout_alignParentStart="true"
-        android:layout_marginRight="5dip">
+        android:padding="3dp"
+        android:background="#fff">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_marginTop="13dp"
-            android:id="@+id/images"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/sp_recycler_image"
             android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="15dp"
-            app:civ_border_color="#fff"
-            app:civ_border_width="1dp"
-            />
-        <TextView
-            android:layout_marginTop="10dp"
-            android:id="@+id/text_sub_service"
+            android:src="@color/bg_screen1"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="0.5dp"
+            android:layout_height="50dp" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/images"
-            android:paddingLeft="25dp"
-            android:gravity="center"
-            android:padding="15dp"
-            android:textColor="#474B4F"
-            android:typeface="sans"
-            android:text="Name "
-            android:textSize="15dip"
-            />
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/sp_recycler_image"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/sp_recycler_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#444"
+                android:typeface="sans"
+                android:layout_marginStart="10dp"
+                android:text="hello world"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/sp_recycler_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#999"
+                android:typeface="sans"
+                android:layout_marginStart="10dp"
+                android:text="+91 0000000000"
+                android:textSize="15sp" />
+        </LinearLayout>
+
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_marginTop="13dp"
-            android:id="@+id/images_call"
-            android:layout_width="50dp"
+            android:id="@+id/sp_recycler_call"
+            android:layout_width="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_centerVertical="true"
             android:background="@drawable/call_icon"
-            android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="15dp"
-            app:civ_border_color="#fff"
-            app:civ_border_width="1dp"
-            />
-
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
-
-    <!-- Title Of Song-->
-
-
-</RelativeLayout>
+</androidx.cardview.widget.CardView>

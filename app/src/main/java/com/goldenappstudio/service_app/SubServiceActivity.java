@@ -1,115 +1,125 @@
 package com.goldenappstudio.service_app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class SubServiceActivity extends AppCompatActivity {
 
-    // Array of strings storing country names
-    String[] countries = new String[] {
-            "Trips & Adventure",
-            "Hotels",
-            "Flights",
-            "Trains",
-            "Bus Service",
-            "Cab & Taxi",
-            "Cruise Ships & Yachts" ,
-            "Trips & Adventure",
-            "Hotels",
-            "Flights",
-            "Trains",
-            "Bus Service",
-            "Cab & Taxi",
-            "Cruise Ships & Yachts"
-    };
-
-    // Array of integers points to images stored in /res/drawable-ldpi/
-    int[] flags = new int[]{
-            R.drawable.travel,
-            R.drawable.hotel,
-            R.drawable.plane,
-            R.drawable.trai,
-            R.drawable.bus,
-            R.drawable.cab,
-            R.drawable.ship,
-            R.drawable.travel,
-            R.drawable.hotel,
-            R.drawable.plane,
-            R.drawable.trai,
-            R.drawable.bus,
-            R.drawable.cab,
-            R.drawable.ship
-    };
-
-
+    DatabaseReference databaseReference;
+    ProgressDialog progressDialog;
+    List<SubService> list = new ArrayList<>();
+    RecyclerView recyclerView;
+    SubServiceRecycler adapter ;
+    EditText search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_service);
 
-        getSupportActionBar().setTitle("SubService Category");
-        List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
+        getSupportActionBar().setTitle("Sub-Services..");
+        search = findViewById(R.id.searchX);
 
-        for(int i=0;i<14;i++){
-            HashMap<String, String> hm = new HashMap<String,String>();
-            hm.put("txt",  countries[i]);
-            hm.put("flag", Integer.toString(flags[i]) );
-            aList.add(hm);
-        }
+        recyclerView = findViewById(R.id.sub_service_recycler);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(SubServiceActivity.this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(SubServiceActivity.this, DividerItemDecoration.VERTICAL));
 
-        // Keys used in Hashmap
-        String[] from = { "flag","txt"};
+        progressDialog = new ProgressDialog(SubServiceActivity.this);
+        progressDialog.setMessage("Loading Data from Database");
+        progressDialog.show();
 
-        // Ids of views in listview_layout
-        int[] to = { R.id.images,R.id.text_sub_service};
-
-        // Instantiating an adapter to store each items
-        // R.layout.listview_layout defines the layout of each item
-        SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), aList, R.layout.custom_layout_sub_service, from, to);
-
-        // Getting a reference to listview of main.xml layout file
-        ListView listView = ( ListView ) findViewById(R.id.list_view_sub_service);
-
-        // Setting the adapter to the listView
-        listView.setAdapter(adapter);
-        AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
+        databaseReference = FirebaseDatabase.getInstance().getReference("service_list/" + CaptionedImagesAdapter.SERVICE_UID + "/sub_service");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View container, int position, long id) {
-                // Getting the Container Layout of the ListView
-                /*LinearLayout linearLayoutParent = (LinearLayout) container;
-                // Getting the inner Linear Layout
-                LinearLayout linearLayoutChild = (LinearLayout) linearLayoutParent.getChildAt(1);
-                // Getting the Country TextView
-                TextView tvCountry = (TextView) linearLayoutChild.getChildAt(0);
-                Toast.makeText(getBaseContext(), tvCountry.getText().toString(), Toast.LENGTH_SHORT).show();*/
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    SubService subService = dataSnapshot.getValue(SubService.class);
+                    list.add(subService);
+                }
 
-
-                Intent intent = new Intent(SubServiceActivity.this,LocationChooser.class);
-                startActivity(intent);
+                adapter = new SubServiceRecycler(getApplicationContext(), list);
+                recyclerView.setAdapter(adapter);
+                progressDialog.dismiss();
             }
-        };
 
-        // Setting the item click listener for the listview
-        listView.setOnItemClickListener(itemClickListener);
-        Animation animation = AnimationUtils.loadAnimation(SubServiceActivity.this,R.anim.fade_in);
-        listView.startAnimation(animation);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                progressDialog.dismiss();
+            }
+        });
 
 
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(SubServiceActivity.this, MainActivity.class));
+        finish();
+    }
+
+    private void filter(String text) {
+        //new array list that will hold the filtered data
+        ArrayList<SubService> filterdNames = new ArrayList<>();
+
+        //looping through existing elements
+        for (SubService s : list) {
+            //if the existing elements contains the search input
+            if (s.getSs_name().toLowerCase().contains(text.toLowerCase())) {
+                //adding the element to filtered list
+                filterdNames.add(s);
+            }
+        }
+        //calling a method of the adapter class and passing the filtered list
+        adapter.filterList(filterdNames);
     }
 }
