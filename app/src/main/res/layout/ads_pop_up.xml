@@ -35,8 +35,7 @@
             android:layout_below="@+id/username"
             android:layout_marginTop="25dp"
             android:layout_marginEnd="35dp"
-            android:typeface="serif"
-            android:text="If you are a service provider and want to show your service in app then just click the send button and contact to admin"
+            android:typeface="sans"
             android:layout_marginStart="35dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -51,8 +50,8 @@
             android:layout_below="@+id/text_ads"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="35dp"
-            android:typeface="serif"
-            android:text="Contact To Admin:\nserviceapphsr@gmail.com"
+            android:typeface="sans"
+            android:text=""
             android:layout_marginStart="35dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

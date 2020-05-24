@@ -13,10 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -65,8 +67,25 @@ public class ServiceProviderProfile extends AppCompatActivity {
         circleImageView = findViewById(R.id.sp_profile_image);
         mListView = findViewById(R.id.list_view_sp_profile);
         call_button = findViewById(R.id.call);
-        CustomAdaptor customAdaptor =  new CustomAdaptor();
-        mListView.setAdapter(customAdaptor);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("service_providers/" + ServiceProviderRecycler.SERVICE_PROVIDER_UID);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                textView.setTextSize(20);
+                textView.setText(snapshot.child("name").getValue().toString());
+
+                StorageReference gsReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://serviceapp-project.appspot.com/service_provider_images/" + ServiceProviderRecycler.SERVICE_PROVIDER_UID + ".png");
+                gsReference.getDownloadUrl().addOnSuccessListener(uri -> Glide.with(getApplicationContext()).load(uri.toString()).into(circleImageView)).addOnFailureListener(exception -> { });
+
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                progressDialog.dismiss();
+            }
+        });
 
         call_button.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_DIAL);
@@ -74,75 +93,34 @@ public class ServiceProviderProfile extends AppCompatActivity {
             startActivity(intent);
         });
 
-    }
+        databaseReference = FirebaseDatabase.getInstance().getReference("service_providers/" + ServiceProviderRecycler.SERVICE_PROVIDER_UID);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                text = new String[]{
+                        "Available",
+                        snapshot.child("name").getValue().toString(),
+                        snapshot.child("email").getValue().toString(),
+                        snapshot.child("phone").getValue().toString(),
+                        snapshot.child("address").getValue().toString(),
+                        snapshot.child("description").getValue().toString()
+                };
 
-    class CustomAdaptor extends BaseAdapter {
-        @Override
-        public int getCount() {
-            return images.length;
-        }
+                CustomList adapter = new
+                        CustomList(ServiceProviderProfile.this, text, images);
+                mListView = findViewById(R.id.list_view_sp_profile);
+                mListView.setAdapter(adapter);
+                mListView.setOnItemClickListener((parent, view, position, id) -> {});
 
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
+                StorageReference gsReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://serviceapp-project.appspot.com/service_provider_images/" + ServiceProviderRecycler.SERVICE_PROVIDER_UID + ".png");
+                gsReference.getDownloadUrl().addOnSuccessListener(uri -> Glide.with(getApplicationContext()).load(uri.toString()).into(circleImageView)).addOnFailureListener(exception -> { });
+                progressDialog.dismiss();
+            }
 
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            @SuppressLint("ViewHolder")
-            View view = getLayoutInflater().inflate(R.layout.customlayout_service_provider_profile, null);
-            ImageView mImageView = view.findViewById(R.id.list_icon);
-            TextView mTextView = view.findViewById(R.id.title);
-
-            mImageView.setImageResource(images[position]);
-
-
-            databaseReference = FirebaseDatabase.getInstance().getReference("service_providers/" + ServiceProviderRecycler.SERVICE_PROVIDER_UID);
-            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    text = new String[]{
-                            "Available",
-                            snapshot.child("name").getValue().toString(),
-                            snapshot.child("email").getValue().toString(),
-                            snapshot.child("phone").getValue().toString(),
-                            snapshot.child("address").getValue().toString(),
-                            snapshot.child("description").getValue().toString()
-                    };
-
-                    textView.setTextSize(20);
-                    textView.setText(snapshot.child("name").getValue().toString());
-
-                    StorageReference gsReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://serviceapp-project.appspot.com/service_provider_images/" + ServiceProviderRecycler.SERVICE_PROVIDER_UID + ".png");
-                    gsReference.getDownloadUrl().addOnSuccessListener(uri -> Glide.with(getApplicationContext()).load(uri.toString()).into(circleImageView)).addOnFailureListener(exception -> { });
-                    progressDialog.dismiss();
-                    mTextView.setText(text[position]);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    progressDialog.dismiss();
-                }
-            });
-
-            Animation animation = AnimationUtils.loadAnimation(ServiceProviderProfile.this,R.anim.fade_in);
-            view.startAnimation(animation);
-            return view;
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        Intent intent = new Intent(ServiceProviderProfile.this, ServiceProviderList.class);
-        startActivity(intent);
-        finish();
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                progressDialog.dismiss();
+            }
+        });
     }
 }

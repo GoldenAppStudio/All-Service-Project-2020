@@ -6,6 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Picasso;
+
+import okhttp3.OkHttp;
+
 public class SplashScreen extends AppCompatActivity {
 
     @Override
@@ -13,17 +19,14 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
-                Intent i = new Intent(SplashScreen.this, Welcome.class);
-                SplashScreen.this.startActivity(i);
+        new Handler().postDelayed(() -> {
 
+            Intent i = new Intent(SplashScreen.this, Welcome.class);
+            SplashScreen.this.startActivity(i);
+            SplashScreen.this.finish();
 
-                SplashScreen.this.finish();
-
-            }
         }, 3500);
     }
 }

@@ -103,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
+                Toast.makeText(LoginActivity.this, "ph: " + phoneAuthCredential, Toast.LENGTH_LONG).show();
                 signInWithPhoneAuthCredential(phoneAuthCredential);
             }
             @Override
@@ -134,11 +135,10 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         LoginActivity.this.sendToMain();
                     } else {
-                        Toast.makeText(LoginActivity.this, "Something wrong", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                         //  Log.w(TAG, "signInWithCredential:failure", task.getException());
                         if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                             Toast.makeText(LoginActivity.this, "OTP is incorrect", Toast.LENGTH_SHORT).show();
-                            return;
                         }
                     }
                 });

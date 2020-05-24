@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/edittext_background"
+    android:padding="5dp"
+    tools:context=".AdClientData"
+    android:layout_gravity="center">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/AdImg"
+            android:layout_marginTop="22dp"
+
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:src="@drawable/app_logo"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+        <TextView
+            android:id="@+id/AdName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="User"
+            android:textColor="#000"
+            android:layout_marginTop="10dp"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/Ad"
+            android:background="@drawable/edittext_background"
+            android:padding="10dp"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="35dp"
+            android:text="If you want In-App ads for your business, you can contact the admin and negotiate. You can either call or Send mail to Admin. Thanks.You can either call or Send mail to Admin. Thanks.You can either call or Send mail to Admin. Thanks.You can either call or Send mail to Admin. \n\nThanks. "
+            android:layout_marginStart="35dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:id="@+id/AdCall"
+                android:layout_marginStart="38dp"
+                android:src="@drawable/call"
+                android:layout_height="40dp" />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:id="@+id/AdMail"
+                android:layout_marginStart="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/mail" />
+
+            <ImageView
+                android:id="@+id/AdAddress"
+                android:layout_width="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/address" />
+
+
+
+            <ImageView
+                android:id="@+id/AdWeb"
+                android:layout_width="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/www" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

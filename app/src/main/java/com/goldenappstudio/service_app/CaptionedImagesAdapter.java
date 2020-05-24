@@ -36,7 +36,7 @@ public class CaptionedImagesAdapter extends RecyclerView.Adapter<CaptionedImages
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_main, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(view);
 
@@ -49,7 +49,6 @@ public class CaptionedImagesAdapter extends RecyclerView.Adapter<CaptionedImages
         final Service service = MainImageUploadInfoList.get(position);
 
         holder.ServiceNameTextView.setText(service.getService_name());
-        Log.d("Service Names adapter", "" + service.getUID());
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
         StorageReference gsReference = storage.getReferenceFromUrl("gs://serviceapp-project.appspot.com/service_images/" + service.getUID() +  ".jpg");
@@ -60,11 +59,16 @@ public class CaptionedImagesAdapter extends RecyclerView.Adapter<CaptionedImages
         });
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), SubServiceActivity.class);
             SERVICE_UID = service.getUID();
-            context.startActivity(intent);
+            if(SERVICE_UID.equals("-M6yKbLSl-cDjaVisXXw")) {
+                Intent intent = new Intent(v.getContext(), TravelActivity.class);
+                context.startActivity(intent);
+            } else {
+                Intent intent = new Intent(v.getContext(), SubServiceActivity.class);
+                SERVICE_UID = service.getUID();
+                context.startActivity(intent);
+            }
         });
-
     }
 
 

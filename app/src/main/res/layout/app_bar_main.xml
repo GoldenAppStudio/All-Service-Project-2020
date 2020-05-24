@@ -46,7 +46,7 @@
         android:text="All Service Available with 100% Accuracy"
         android:textColor="#fff"
         android:id="@+id/tag_line"
-        android:textSize="12sp"/>
+        android:textSize="14sp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/service_recycler"
@@ -56,6 +56,16 @@
         android:layout_height="match_parent">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+        <Button
+            android:id="@+id/popup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#000"
+            android:onClick="ShowPopup"
+            android:text="show popup"
+            android:textColor="#fff"
+            android:visibility="visible" />
 
 
     </RelativeLayout>

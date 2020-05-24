@@ -51,7 +51,7 @@ import id.zelory.compressor.Compressor;
 public class ServiceProviderRegistration extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     CircleImageView circleImageView;
-    EditText name, email, description, address;
+    EditText name, email, description, address, company;
     Spinner serviceSpinner, subServiceSpinner, stateSpinner, districtSpinner;
     private ProgressDialog progressDialog;
     List<String> service_list = new ArrayList<>();
@@ -85,6 +85,7 @@ public class ServiceProviderRegistration extends AppCompatActivity implements Ad
         subServiceSpinner = findViewById(R.id.spinner_sub_service);
         description = findViewById(R.id.owner_description);
         address = findViewById(R.id.owner_address);
+        company = findViewById(R.id.owner_company);
 
         progressDialog = new ProgressDialog(ServiceProviderRegistration.this, R.style.MyTheme);
         progressDialog.setMessage("Loading please wait...");
@@ -151,19 +152,21 @@ public class ServiceProviderRegistration extends AppCompatActivity implements Ad
         String login = FirebaseAuth.getInstance().getUid();
 
         Map<String, String> userMap = new HashMap<>();
-        userMap.put("name", name.getText().toString());
-        userMap.put("description", description.getText().toString());
+        userMap.put("name", name.getText().toString().trim());
+        userMap.put("description", description.getText().toString().trim());
         userMap.put("phone", FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
         userMap.put("UID", key);
-        userMap.put("sub_service", subServiceSpinner.getSelectedItem().toString());
-        userMap.put("address", address.getText().toString());
-        userMap.put("email", email.getText().toString());
-        userMap.put("service", serviceSpinner.getSelectedItem().toString());
-        userMap.put("state", stateSpinner.getSelectedItem().toString());
-        userMap.put("district", districtSpinner.getSelectedItem().toString());
+        userMap.put("sub_service", subServiceSpinner.getSelectedItem().toString().trim());
+        userMap.put("address", address.getText().toString().trim());
+        userMap.put("email", email.getText().toString().trim());
+        userMap.put("service", serviceSpinner.getSelectedItem().toString().trim());
+        userMap.put("state", stateSpinner.getSelectedItem().toString().trim());
+        userMap.put("district", districtSpinner.getSelectedItem().toString().trim());
+        if(!company.getText().toString().isEmpty()) {
+            userMap.put("comapny", company.getText().toString().trim());
+        }
 
         firebaseFirestore.collection("Users").document(key).set(userMap).addOnCompleteListener(task1 -> {
-
             if (task1.isSuccessful()) {
                 Intent mainIntent = new Intent(ServiceProviderRegistration.this, RequestPending.class);
                 startActivity(mainIntent);

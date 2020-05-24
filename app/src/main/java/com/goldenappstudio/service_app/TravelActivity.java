@@ -1,8 +1,10 @@
 package com.goldenappstudio.service_app;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class TravelActivity extends AppCompatActivity {
 
@@ -38,6 +46,8 @@ public class TravelActivity extends AppCompatActivity {
             "Cab & Taxi",
             "Cruise Ships & Yachts"};
 
+    String f, t, b, c, h, e, s;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +60,26 @@ public class TravelActivity extends AppCompatActivity {
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,text);
 
+        DatabaseReference Reference = FirebaseDatabase.getInstance().getReference("Travel/");
+        Reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    f = dataSnapshot.child("plane").getValue().toString();
+                    t = dataSnapshot.child("train").getValue().toString();
+                    c = dataSnapshot.child("cab").getValue().toString();
+                    h = dataSnapshot.child("hotel").getValue().toString();
+                    e = dataSnapshot.child("trip").getValue().toString();
+                    s = dataSnapshot.child("ship").getValue().toString();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         mListView.setAdapter(adapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -59,42 +89,50 @@ public class TravelActivity extends AppCompatActivity {
 
                 if(myNames == text[0])
                 {
-                    //trips and adventure
-                    Toast.makeText(TravelActivity.this, "" + myNames, Toast.LENGTH_SHORT).show();
+                    if (!e.startsWith("http://") && !e.startsWith("https://"))
+                        e = "http://" + e;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(e));
+                    startActivity(browserIntent);
                 }
                 else if (myNames == text[1])
                 {
-                    //hotels url link
-                    Toast.makeText(TravelActivity.this, "" + myNames, Toast.LENGTH_SHORT).show();
-
+                    if (!h.startsWith("http://") && !h.startsWith("https://"))
+                        h = "http://" + h;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(h));
+                    startActivity(browserIntent);
                 }
                 else if (myNames == text[2])
                 {
-                    //flights url link
-                    Toast.makeText(TravelActivity.this, "" + myNames, Toast.LENGTH_SHORT).show();
-
+                    if (!f.startsWith("http://") && !f.startsWith("https://"))
+                        f = "http://" + f;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(f));
+                    startActivity(browserIntent);
                 }else if (myNames == text[3])
                 {
-                    //trains url link
-                    Toast.makeText(TravelActivity.this, "" + myNames, Toast.LENGTH_SHORT).show();
-
+                    if (!t.startsWith("http://") && !t.startsWith("https://"))
+                        t = "http://" + t;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(t));
+                    startActivity(browserIntent);
                 }else if (myNames == text[4])
                 {
                     //bus
-                    Intent intent = new Intent(TravelActivity.this,BusChooserActivity.class);
+                    Intent intent = new Intent(TravelActivity.this,BusChooser.class);
                     startActivity(intent);
                     Toast.makeText(TravelActivity.this, "" + myNames, Toast.LENGTH_SHORT).show();
 
                 }else if (myNames == text[5])
                 {
-                    //cab and taxi url link
-                    Toast.makeText(TravelActivity.this, "" + myNames, Toast.LENGTH_SHORT).show();
+                    if (!c.startsWith("http://") && !c.startsWith("https://"))
+                        c = "http://" + c;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(c));
+                    startActivity(browserIntent);
 
                 }else if (myNames == text[6])
                 {
-                    //Ships and Yachts url link
-                    Toast.makeText(TravelActivity.this, "" + myNames, Toast.LENGTH_SHORT).show();
-
+                    if (!s.startsWith("http://") && !s.startsWith("https://"))
+                        s = "http://" + s;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(s));
+                    startActivity(browserIntent);
                 }
             }
         });
@@ -123,7 +161,7 @@ public class TravelActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             View view = getLayoutInflater().inflate(R.layout.customlayout_travel, null);
-            ImageView mImageView = (ImageView) view.findViewById(R.id.list_icon_travel);
+            ImageView mImageView =  view.findViewById(R.id.list_icon_travel);
             TextView mTextView = view.findViewById(R.id.title_travel);
 
             mImageView.setImageResource(images[position]);

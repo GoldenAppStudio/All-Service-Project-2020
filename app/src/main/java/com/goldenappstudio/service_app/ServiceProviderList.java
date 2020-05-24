@@ -56,6 +56,7 @@ public class ServiceProviderList extends AppCompatActivity {
         progressDialog = new ProgressDialog(ServiceProviderList.this);
         progressDialog.setMessage("Loading Data from Database");
         progressDialog.show();
+        progressDialog.setCancelable(false);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("service_providers/");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -99,14 +100,6 @@ public class ServiceProviderList extends AppCompatActivity {
                 filter(s.toString());
             }
         });
-    }
-
-    @Override
-    public void onBackPressed()
-    {
-        super.onBackPressed();
-        startActivity(new Intent(ServiceProviderList.this, SubServiceActivity.class));
-        finish();
     }
 
     private void filter(String text) {
