@@ -44,6 +44,7 @@ public class ServiceProviderProfile extends AppCompatActivity {
     int[] images = {
             R.drawable.available,
             R.drawable.avatar,
+            R.drawable.hotel,
             R.drawable.email,
             R.drawable.phone_sp_profile,
             R.drawable.address,
@@ -97,14 +98,28 @@ public class ServiceProviderProfile extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                text = new String[]{
-                        "Available",
-                        snapshot.child("name").getValue().toString(),
-                        snapshot.child("email").getValue().toString(),
-                        snapshot.child("phone").getValue().toString(),
-                        snapshot.child("address").getValue().toString(),
-                        snapshot.child("description").getValue().toString()
-                };
+                if(snapshot.child("company").exists()) {
+                    text = new String[]{
+                            "Available",
+                            snapshot.child("name").getValue().toString(),
+                            snapshot.child("company").getValue().toString(),
+                            snapshot.child("email").getValue().toString(),
+                            snapshot.child("phone").getValue().toString(),
+                            snapshot.child("address").getValue().toString(),
+                            snapshot.child("description").getValue().toString()
+                    };
+                } else {
+                    text = new String[]{
+                            "Available",
+                            snapshot.child("name").getValue().toString(),
+                            "N/A",
+                            snapshot.child("email").getValue().toString(),
+                            snapshot.child("phone").getValue().toString(),
+                            snapshot.child("address").getValue().toString(),
+                            snapshot.child("description").getValue().toString()
+                    };
+                }
+
 
                 CustomList adapter = new
                         CustomList(ServiceProviderProfile.this, text, images);
