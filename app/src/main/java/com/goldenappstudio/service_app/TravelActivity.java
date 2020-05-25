@@ -118,7 +118,6 @@ public class TravelActivity extends AppCompatActivity {
                     //bus
                     Intent intent = new Intent(TravelActivity.this,BusChooser.class);
                     startActivity(intent);
-                    Toast.makeText(TravelActivity.this, "" + myNames, Toast.LENGTH_SHORT).show();
 
                 }else if (myNames == text[5])
                 {

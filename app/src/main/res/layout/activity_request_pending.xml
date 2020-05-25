@@ -7,8 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".RequestPending">
 
-    <!-- TODO: add GoldenApp Studio Corporation logo -->
-
     <ImageView
         android:layout_width="160dp"
         android:layout_height="160dp"
@@ -41,6 +39,19 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/pending_text"
         android:text="Explore app for now"/>
+
+    <Button
+        android:background="@color/sky"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logout_button"
+        android:textColor="#fff"
+        android:padding="5dp"
+        android:textAllCaps="false"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/pending_button"
+        android:text="Log Out"/>
 
 
 </RelativeLayout>

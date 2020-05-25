@@ -21,6 +21,11 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.concurrent.TimeUnit;
 
@@ -47,11 +52,6 @@ public class LoginActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Phone Authentication");
 
-        if(FirebaseAuth.getInstance().getCurrentUser() != null){
-            Intent intent = new Intent(LoginActivity.this, ServiceProviderRegistration.class);
-            startActivity(intent);
-        }
-
         phoneNo = findViewById(R.id.phoneno);
         vc = findViewById(R.id.vc);
         phoneSubmit = findViewById(R.id.phone_submit);
@@ -61,7 +61,6 @@ public class LoginActivity extends AppCompatActivity {
         phoneSubmit.setOnClickListener(v -> {
 
             abc = phoneNo.getText().toString();
-
             if (abc.isEmpty()) {
                 phoneNo.setError("Phone number is required");
                 phoneNo.requestFocus();
@@ -118,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
 
         vcSubmit.setOnClickListener(v -> {
             String code = vc.getText().toString();
+            vcSubmit.setText("Please wait...");
             if (code.isEmpty()) {
                 phoneNo.setError("Phone enter verification code");
                 phoneNo.requestFocus();
@@ -130,12 +130,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+    //    Toast.makeText(this, "3", Toast.LENGTH_SHORT).show();
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        LoginActivity.this.sendToMain();
+                        sendToMain();
                     } else {
-                        // Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                         Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                         //  Log.w(TAG, "signInWithCredential:failure", task.getException());
                         if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                             Toast.makeText(LoginActivity.this, "OTP is incorrect", Toast.LENGTH_SHORT).show();
@@ -154,8 +155,54 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void sendToMain() {
-        Intent mainIntent = new Intent(LoginActivity.this, ServiceProviderRegistration.class);
-        startActivity(mainIntent);
-        finish();
+        first_phase_checking();
+    }
+
+    public void second_phase_checking() {
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        db.child("service_providers").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
+                    if (snapshot1.child("phone").getValue().toString()
+                            .equals(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber())) {
+                        Intent intent = new Intent(LoginActivity.this, BusChooserActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(LoginActivity.this, ServiceProviderRegistration.class);
+                        startActivity(intent);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
+    }
+
+    public void first_phase_checking() {
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        db.child("PendingRequests").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if(snapshot.child("phone").getValue().toString()
+                            .equals(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber())) {
+                        Intent intent = new Intent(LoginActivity.this, RequestPending.class);
+                        startActivity(intent);
+                        return;
+                    }
+                }
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if(!snapshot.child("phone").getValue().toString()
+                            .equals(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber())) {
+                        second_phase_checking();
+                        return;
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
     }
 }

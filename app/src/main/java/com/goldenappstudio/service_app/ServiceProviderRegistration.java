@@ -124,15 +124,23 @@ public class ServiceProviderRegistration extends AppCompatActivity implements Ad
                     UploadTask image_path = storageReference.child("service_provider_images").child(key + ".jpg").putBytes(thumbData);
                     image_path.addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
+                            DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+                            db.child("PendingRequests").child(key).child("phone").setValue(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
+
                             storeFirestore(task);
                         } else {
                             String error = task.getException().getMessage();
                             Toast.makeText(ServiceProviderRegistration.this, "(IMAGE Error) : " + error, Toast.LENGTH_LONG).show();
                         }
                     });
-                } else storeFirestore(null);
+                } else {
+                    DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+                    db.child("PendingRequests").child(key).child("phone").setValue(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
 
-                Toast.makeText(this, "Everything is okay", Toast.LENGTH_SHORT).show();
+                    storeFirestore(null);
+
+                }
+
             } else Toast.makeText(this, "Please make sure you fill all the form and select everything", Toast.LENGTH_SHORT).show();
         });
 
@@ -176,6 +184,14 @@ public class ServiceProviderRegistration extends AppCompatActivity implements Ad
                 Toast.makeText(ServiceProviderRegistration.this, "(FIRESTORE Error) : " + error, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent mainIntent = new Intent(ServiceProviderRegistration.this, MainActivity.class);
+        startActivity(mainIntent);
+        finish();
     }
 
     private boolean is_everything_okay() {

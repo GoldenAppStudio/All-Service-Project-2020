@@ -2,13 +2,13 @@ package com.goldenappstudio.service_app;
 
 public class ServiceProvider {
     private String name, UID;
-    private long phone;
+    private String phone;
 
     public ServiceProvider() {
         //empty constructor needed
     }
 
-    public ServiceProvider(String name, String UID, long phone) {
+    public ServiceProvider(String name, String UID, String phone) {
         this.name = name;
         this.phone = phone;
         this.UID = UID;
@@ -18,7 +18,7 @@ public class ServiceProvider {
         return name;
     }
 
-    public long getPhone() {
+    public String getPhone() {
         return phone;
     }
 

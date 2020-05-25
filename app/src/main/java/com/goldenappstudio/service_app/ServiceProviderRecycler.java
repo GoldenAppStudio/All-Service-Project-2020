@@ -28,7 +28,7 @@ public class ServiceProviderRecycler extends RecyclerView.Adapter<ServiceProvide
     Context context;
     List<ServiceProvider> MainImageUploadInfoList;
     public static String SERVICE_PROVIDER_UID;
-    public static long SERVICE_PROVIDER_PHONE_NO;
+    public static String SERVICE_PROVIDER_PHONE_NO;
 
     public ServiceProviderRecycler(Context context, List<ServiceProvider> TempList) {
         this.MainImageUploadInfoList = TempList;
@@ -49,7 +49,7 @@ public class ServiceProviderRecycler extends RecyclerView.Adapter<ServiceProvide
 
         final ServiceProvider serviceProvider = MainImageUploadInfoList.get(position);
         holder.ServiceProviderName.setText(serviceProvider.getName());
-        holder.ServiceProviderPhone.setText(String.format("+91 %d", serviceProvider.getPhone()));
+        holder.ServiceProviderPhone.setText(String.format("+91 %s", serviceProvider.getPhone().substring(3)));
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference gsReference = storage.getReferenceFromUrl("gs://serviceapp-project.appspot.com/sub_service_images/" + SubServiceRecycler.SUB_SERVICE_UID + ".jpg");
 
@@ -67,7 +67,7 @@ public class ServiceProviderRecycler extends RecyclerView.Adapter<ServiceProvide
 
         holder.ServiceProviderCall.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_DIAL);
-            intent.setData(Uri.parse("tel:" + serviceProvider.getPhone()));
+            intent.setData(Uri.parse("tel:" + Long.parseLong(serviceProvider.getPhone().substring(3))));
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         });

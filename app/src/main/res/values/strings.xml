@@ -108,6 +108,46 @@
         <item>West Bengal</item>
 
     </string-array>
+    <string-array name="country_state_with_default">
+
+        <item>Choose State</item>
+        <item>Haryana</item>
+        <item>Punjab</item>
+        <item>Delhi (NCT)</item>
+        <item>Andhra Pradesh</item>
+        <item>Arunachal Pradesh</item>
+        <item>Assam</item>
+        <item>Bihar</item>
+        <item>Chandigarh (UT)</item>
+        <item>Chhattisgarh</item>
+        <item>Dadra &amp; Nagar Haveli (UT)</item>
+        <item>Daman and Diu (UT)</item>
+        <item>Goa</item>
+        <item>Gujarat</item>
+        <item>Himachal Pradesh</item>
+        <item>Jammu and Kashmir</item>
+        <item>Jharkhand</item>
+        <item>Karnataka</item>
+        <item>Kerala</item>
+        <item>Lakshadweep (UT)</item>
+        <item>Madhya Pradesh</item>
+        <item>Maharashtra</item>
+        <item>Manipur</item>
+        <item>Meghalaya</item>
+        <item>Mizoram</item>
+        <item>Nagaland</item>
+        <item>Odisha</item>
+        <item>Puducherry (UT)</item>
+        <item>Rajasthan</item>
+        <item>Sikkim</item>
+        <item>Tamil Nadu</item>
+        <item>Telangana</item>
+        <item>Tripura</item>
+        <item>Uttarakhand</item>
+        <item>Uttar Pradesh</item>
+        <item>West Bengal</item>
+
+    </string-array>
 
     <string name="company_about">If you want to go digital with your idea then you will find GoldenApp Studio the best choice out there in the market. With 50+ happy clients we are continuing to provide best solution. you can contact with the following link below: </string>
     <string name="title_activity_pending">Sign in</string>

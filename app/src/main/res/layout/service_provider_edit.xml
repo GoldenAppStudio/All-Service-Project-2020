@@ -35,7 +35,7 @@
             android:textSize="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tap to choose new Image/Logo (optional)"
+            android:text="Tap to choose Your Image/Logo (optional)"
             android:layout_gravity="center"
             android:typeface="sans"
             android:textColor="#474B4F"/>

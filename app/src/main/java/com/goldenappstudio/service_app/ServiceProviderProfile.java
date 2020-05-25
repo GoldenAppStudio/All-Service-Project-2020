@@ -90,7 +90,7 @@ public class ServiceProviderProfile extends AppCompatActivity {
 
         call_button.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_DIAL);
-            intent.setData(Uri.parse("tel:" + ServiceProviderRecycler.SERVICE_PROVIDER_PHONE_NO));
+            intent.setData(Uri.parse("tel:" + Long.parseLong(ServiceProviderRecycler.SERVICE_PROVIDER_PHONE_NO.substring(3))));
             startActivity(intent);
         });
 

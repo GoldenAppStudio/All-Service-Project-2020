@@ -25,6 +25,7 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,12 +37,22 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -52,6 +63,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.Queue;
 import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -90,6 +103,7 @@ public class MainActivity extends AppCompatActivity
         get_today_date();
         get_meta_data();
         get_contact_emails();
+        FirebaseAuth.getInstance().signOut();
     }
 
     private void get_contact_emails() {
@@ -170,11 +184,7 @@ public class MainActivity extends AppCompatActivity
                 serviceRecycler.startAnimation(animation);
 
                 GlobalClass globalClass = new GlobalClass();
-                if(globalClass.aBoolean) {
-                    setShowPopUp();
-                    Toast.makeText(MainActivity.this, "HERE ", Toast.LENGTH_SHORT).show();
-                    globalClass.aBoolean = false;
-                }
+                setShowPopUp();
             }
 
             @Override
@@ -256,10 +266,63 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.add_my_service) {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
+            if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+                first_phase_checking();
+            } else {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void second_phase_checking() {
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        db.child("service_providers").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
+                            if (snapshot1.child("phone").getValue().toString()
+                                    .equals(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber())) {
+                                Intent intent = new Intent(MainActivity.this, BusChooserActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Intent intent = new Intent(MainActivity.this, ServiceProviderRegistration.class);
+                                startActivity(intent);
+                            }
+                        }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
+    }
+
+    public void first_phase_checking() {
+       DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+       db.child("PendingRequests").addValueEventListener(new ValueEventListener() {
+           @Override
+           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                   for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                           if(snapshot.child("phone").getValue().toString()
+                                   .equals(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber())) {
+                               Intent intent = new Intent(MainActivity.this, RequestPending.class);
+                               startActivity(intent);
+                               return;
+                           }
+                   }
+               for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                   if(!snapshot.child("phone").getValue().toString()
+                           .equals(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber())) {
+                       second_phase_checking();
+                       return;
+                   }
+               }
+
+           }
+           @Override
+           public void onCancelled(@NonNull DatabaseError databaseError) {}
+       });
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -302,10 +365,7 @@ public class MainActivity extends AppCompatActivity
 
         }
         else if (id == R.id.nav_exit) {
-           // onBackPressed();
-            Intent intent = new Intent(MainActivity.this, BusChooser.class);
-            startActivity(intent);
-
+           onBackPressed();
         }
         else if(id == R.id.nav_contact_us){
             String message = "Here is the email from you can directly contact to admin of the app";
@@ -365,6 +425,7 @@ public class MainActivity extends AppCompatActivity
         dialog.show();
     }
 
+    // dialog of Contact and IN-App contact
     public void showDialog(Activity activity, String msg, String message, String subject){
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
