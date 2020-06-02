@@ -28,7 +28,7 @@
         android:textColor="#333"
         android:layout_marginTop="35dp"/>
 
-    <Spinner
+    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
         android:id="@+id/spb"
         android:background="@drawable/edittext_background"
         android:padding="10dp"
@@ -40,8 +40,7 @@
         android:textColor="#000"
         android:layout_marginStart="25dp"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
-    </Spinner>
+        android:layout_height="45dp"/>
 
     <TextView
         android:layout_marginStart="25dp"
@@ -55,7 +54,7 @@
         android:textColor="#333"
         android:layout_marginTop="20dp"/>
 
-    <Spinner
+    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
         android:id="@+id/db"
         android:background="@drawable/edittext_background"
         android:padding="10dp"
@@ -67,8 +66,8 @@
         android:theme="@style/SpinKitView.Large.Circle"
         android:layout_marginStart="25dp"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
-    </Spinner>
+        android:layout_height="45dp"/>
+
 
     <Button
         android:background="@drawable/gradient_button_main"

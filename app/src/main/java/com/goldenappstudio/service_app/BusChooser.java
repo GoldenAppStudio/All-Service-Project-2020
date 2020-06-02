@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import org.w3c.dom.Text;
 
@@ -26,7 +27,7 @@ import java.util.List;
 
 public class BusChooser extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private Spinner spb, db;
+    private SearchableSpinner spb, db;
     private Button sbb, sb;
     private ProgressDialog progressDialog;
     private DatabaseReference databaseReference;
@@ -124,5 +125,11 @@ public class BusChooser extends AppCompatActivity implements AdapterView.OnItemS
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        spb.onSaveInstanceState();
+        db.onSaveInstanceState();
     }
 }

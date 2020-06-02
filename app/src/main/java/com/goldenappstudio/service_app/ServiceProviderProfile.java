@@ -1,27 +1,16 @@
 package com.goldenappstudio.service_app;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Typeface;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -76,7 +65,7 @@ public class ServiceProviderProfile extends AppCompatActivity {
                 textView.setTextSize(20);
                 textView.setText(snapshot.child("name").getValue().toString());
 
-                StorageReference gsReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://serviceapp-project.appspot.com/service_provider_images/" + ServiceProviderRecycler.SERVICE_PROVIDER_UID + ".png");
+                StorageReference gsReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://serviceapp-project.appspot.com/service_provider_images/" + ServiceProviderRecycler.SERVICE_PROVIDER_UID + ".jpg");
                 gsReference.getDownloadUrl().addOnSuccessListener(uri -> Glide.with(getApplicationContext()).load(uri.toString()).into(circleImageView)).addOnFailureListener(exception -> { });
 
                 progressDialog.dismiss();

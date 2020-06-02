@@ -7,15 +7,21 @@
     android:layout_height="match_parent"
     tools:context=".RequestPending">
 
-    <ImageView
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/spinner"
+        android:layout_centerHorizontal="true"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:layout_marginBottom="20dp"
         android:layout_above="@+id/pending_text"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/pending" />
+        android:layout_marginBottom="20dp"
+        app:SpinKit_Color="@color/sky"
+        style="@style/SpinKitView.Large.CubeGrid">
+
+    </com.github.ybq.android.spinkit.SpinKitView>
 
     <TextView
+        android:textStyle="bold"
+        android:typeface="serif"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
@@ -28,20 +34,23 @@
         android:text="Your request has been sent to Admin\nPlease wait until the Admin accept your request and let you threw." />
 
     <Button
-        android:background="@color/sky"
-        android:layout_width="wrap_content"
+        android:background="@drawable/gradient_button_main"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/pending_button"
         android:textColor="#fff"
         android:padding="5dp"
         android:textAllCaps="false"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/pending_text"
-        android:text="Explore app for now"/>
+        android:text="Explore App for now"
+        android:textSize="20dp"/>
 
     <Button
-        android:background="@color/sky"
+        android:background="@drawable/gradient_button_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/logout_button"
@@ -51,7 +60,8 @@
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/pending_button"
-        android:text="Log Out"/>
+        android:text="LogOut"
+        android:textSize="20dp"/>
 
 
 </RelativeLayout>

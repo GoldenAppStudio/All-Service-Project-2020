@@ -92,7 +92,7 @@
             android:text="Choose Your Service"
             android:textColor="#474B4F"/>
 
-        <Spinner
+        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
             android:typeface="sans"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
@@ -115,7 +115,7 @@
             android:text="Choose Your Sub-Service"
             android:textColor="#474B4F"/>
 
-        <Spinner
+        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
             android:typeface="sans"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
@@ -157,7 +157,7 @@
             android:textColor="#474B4F"
             />
 
-        <Spinner
+        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
             android:id="@+id/spinner_state"
@@ -177,7 +177,7 @@
             android:text="District"
             android:textColor="#474B4F"
             android:layout_marginTop="15dp"/>
-        <Spinner
+        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
             android:typeface="sans"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
@@ -195,7 +195,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="City/Town/Village"
+            android:text="City/Town/Village/Address"
             android:textColor="#474B4F"/>
         <EditText
             android:typeface="sans"

@@ -33,7 +33,7 @@
             android:paddingLeft="@dimen/desc_padding"
             android:paddingRight="@dimen/desc_padding"
             android:typeface="serif"
-            android:text="If you are a service provider and want to give your service to all service app then just click plus button and fill registration form and register yourself free\nGreat News for Service providers."
+            android:text="If you are a service provider and want to give your service to Find App then just click plus button and fill registration form and register yourself free\nGreat News for Service providers."
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="@dimen/slide_desc" />

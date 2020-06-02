@@ -17,6 +17,7 @@
             android:id="@+id/nav_exit"
             android:icon="@drawable/exit"
             android:title="Exit From App" />
+
         </group>
     <item android:title="Show Your Business Ads In App">
         <menu>

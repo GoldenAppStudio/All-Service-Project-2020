@@ -6,13 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-
     <ImageView
-        android:src="@drawable/phone"
+        android:id="@+id/disc"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/disclaimer"/>
+
+    <TextView
+        android:id="@+id/text_disc_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:typeface="serif"
+        android:layout_below="@+id/disc"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="If you are not a service provider then kindly leave this section"
+        android:textAlignment="center"
+        android:textSize="15dp"
+        android:layout_marginRight="20dp"
+        />
+    <ImageView
+        android:layout_below="@+id/text_disc_info"
+        android:src="@drawable/phone_above"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/text_authentication"/>
 
 
@@ -22,9 +44,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/text_authentication"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25sp"
+        android:layout_marginTop="20dp"
         android:textColor="#222"
-        android:text="Please Enter Your Phone Number And Continue.\n You don't have to enter verification code manually "
+        android:text="Please Enter Your Phone Number And Continue.\n You don't have to enter verification code manually if the number install in your phone."
         android:textAlignment="center"
         android:textSize="15dp"
          />

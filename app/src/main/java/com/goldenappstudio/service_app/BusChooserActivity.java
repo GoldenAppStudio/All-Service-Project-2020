@@ -99,11 +99,30 @@ public class BusChooserActivity extends AppCompatActivity implements AdapterView
         stateSpinner.setOnItemSelectedListener(this);
         serviceSpinner.setOnItemSelectedListener(this);
 
+        stateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                populate_district_list();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        serviceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                populate_sub_service_list();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         service_list.add("Choose Service");
-        sub_service_list.add("Choose Sub-Service");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(BusChooserActivity.this, android.R.layout.simple_spinner_item, sub_service_list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        subServiceSpinner.setAdapter(dataAdapter);
 
         populate_service_list();
         fetch_data_in_fields();
@@ -266,8 +285,7 @@ public class BusChooserActivity extends AppCompatActivity implements AdapterView
            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                    if(snapshot.child("ss_name").getValue().toString().equals(subServiceSpinner.getSelectedItem().toString())) {
-                       Toast.makeText(BusChooserActivity.this, "" + subServiceSpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-                       sub_service_uid = snapshot.child("ss_name").getValue().toString();
+                       sub_service_uid = snapshot.child("UID").getValue().toString();
                        storeFirestore(task);
                    }
                }
@@ -341,10 +359,7 @@ public class BusChooserActivity extends AppCompatActivity implements AdapterView
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        populate_sub_service_list();
-        populate_district_list();
-    }
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { }
 
     private void populate_district_list() {
         String sp1= String.valueOf(stateSpinner.getSelectedItem());
@@ -1382,6 +1397,7 @@ public class BusChooserActivity extends AppCompatActivity implements AdapterView
                                 sub_service_list.add("" + db.child("ss_name").getValue().toString());
                                 ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(BusChooserActivity.this, android.R.layout.simple_spinner_item, sub_service_list);
                                 dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                dataAdapter.notifyDataSetChanged();
                                 subServiceSpinner.setAdapter(dataAdapter);
                             }
                         }
@@ -1394,6 +1410,14 @@ public class BusChooserActivity extends AppCompatActivity implements AdapterView
                 }
             });
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        stateSpinner.onSaveInstanceState();
+        serviceSpinner.onSaveInstanceState();
+        subServiceSpinner.onSaveInstanceState();
+        districtSpinner.onSaveInstanceState();
     }
 
     @Override

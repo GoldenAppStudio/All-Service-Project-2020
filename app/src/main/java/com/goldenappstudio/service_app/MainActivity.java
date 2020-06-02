@@ -21,11 +21,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,8 +35,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -46,25 +43,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
-import java.util.Queue;
 import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -103,7 +89,7 @@ public class MainActivity extends AppCompatActivity
         get_today_date();
         get_meta_data();
         get_contact_emails();
-        FirebaseAuth.getInstance().signOut();
+
     }
 
     private void get_contact_emails() {
@@ -286,11 +272,18 @@ public class MainActivity extends AppCompatActivity
                                     .equals(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber())) {
                                 Intent intent = new Intent(MainActivity.this, BusChooserActivity.class);
                                 startActivity(intent);
-                            } else {
-                                Intent intent = new Intent(MainActivity.this, ServiceProviderRegistration.class);
-                                startActivity(intent);
+                                return;
                             }
-                        }
+                    }
+                for (DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
+                    if (!snapshot1.child("phone").getValue().toString()
+                            .equals(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber())) {
+                        Intent intent = new Intent(MainActivity.this, ServiceProviderRegistration.class);
+                        startActivity(intent);
+                        return;
+                    }
+                }
+
             }
 
             @Override
@@ -333,7 +326,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_report_bug) {
 
-            intent.putExtra(Intent.EXTRA_EMAIL, recipients);
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"studiogoldenapp@gmail.com"});
             intent.putExtra(Intent.EXTRA_SUBJECT,"Bug in Service App...");
             intent.putExtra(Intent.EXTRA_TEXT,"Body of the content here...");
             intent.putExtra(Intent.EXTRA_CC,"mailcc@gmail.com");
@@ -359,7 +352,7 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.nav_share) {
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "Download All Service App to find almost every type of services from home. Download Link\n"+"https://play.google.com/store/apps/details?id=com.goldenappstudio.service_app");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "Download Find Service App to find almost every type of services from home. Download Link\n"+"https://play.google.com/store/apps/details?id=com.goldenappstudio.service_app");
             shareIntent.setType("text/plane");
             startActivity(Intent.createChooser(shareIntent, "Share All Service App via"));
 
@@ -367,6 +360,7 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.nav_exit) {
            onBackPressed();
         }
+
         else if(id == R.id.nav_contact_us){
             String message = "Here is the email from you can directly contact to admin of the app";
             recipients = new String[] {CONTACT_EMAIL};
@@ -618,6 +612,7 @@ public class MainActivity extends AppCompatActivity
         txtclose.setText("X");
         TextView pT = myDialog.findViewById(R.id.pT);
         TextView pB = myDialog.findViewById(R.id.pB);
+        final int[] image = new int[1];
 
         DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference("Today");
         firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -652,14 +647,13 @@ public class MainActivity extends AppCompatActivity
                     if(priorityList.get(i) < random && random < priorityList.get(i) + priorityList.get(i + 1)){
                         user.setText(dataSnapshot.child(String.valueOf(i+1)).child("name").getValue().toString());
                         pT.setText(dataSnapshot.child(String.valueOf(i+1)).child("shortDisc").getValue().toString());
-                      //  image = i + 1;
+                        image[0] = i + 1;
                     }
                 }
-              // StorageReference gsReference = FirebaseStorage.getInstance().getReferenceFromUrl(String.format("gs://serviceapp-67984.appspot.com/ads_images/%s.jpg", String.valueOf(image)));
-               // StorageReference gsReference = storage.getReferenceFromUrl("gs://serviceapp-67984.appspot.com/service/Software Development.jpg");
-            //    gsReference.getDownloadUrl().addOnSuccessListener(uri -> Glide.with(MainActivity.this).load(uri.toString()).into(circleImageView)).addOnFailureListener(exception -> {
+               StorageReference gsReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://serviceapp-project.appspot.com/ads_images/" + image[0] + ".jpg");
+                gsReference.getDownloadUrl().addOnSuccessListener(uri -> Glide.with(MainActivity.this).load(uri.toString()).into(circleImageView)).addOnFailureListener(exception -> {
                     // Handle any errors
-           //     });
+                });
             }
 
             @Override
@@ -689,7 +683,7 @@ public class MainActivity extends AppCompatActivity
             });
 
             Intent intent = new Intent(MainActivity.this, AdClientData.class);
-             intent.putExtra("key", "image");
+             intent.putExtra("key", image[0]);
             startActivity(intent);
         });
 

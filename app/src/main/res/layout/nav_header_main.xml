@@ -34,7 +34,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="All Service App"
+            android:text="Find Service"
             android:typeface="serif"
             android:textStyle="bold"
             android:textColor="#fff"

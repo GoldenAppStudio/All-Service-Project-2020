@@ -2,6 +2,7 @@ package com.goldenappstudio.service_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,11 +10,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocationChooser extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class LocationChooser extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     Spinner stateSpinner, distSpinner;
     public static String PROVINCE, COUNTY;
@@ -28,6 +32,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
 
         stateSpinner = findViewById(R.id.state_spinnerZ);
         distSpinner = findViewById(R.id.district_chooserZ);
+        distSpinner.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         button = findViewById(R.id.dac);
         stateSpinner.setOnItemSelectedListener(this);
 
@@ -60,7 +65,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("YSR Kadapa");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -89,9 +94,10 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Sirsa");
             list.add("Sonipat");
             list.add("Yamunanagar");
+            list.add("Chandigarh");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -121,9 +127,10 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Longding");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
+            distSpinner.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         }
 
 
@@ -164,7 +171,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("West Karbi Anglong");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -212,7 +219,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("West Champaran");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -222,7 +229,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Chandigarh");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -258,7 +265,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Surguja");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -269,7 +276,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Dadra & Nagar Haveli");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -281,7 +288,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Diu");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -302,7 +309,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("West Delhi");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -314,7 +321,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("South Goa");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -357,7 +364,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Valsad");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -379,7 +386,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Una");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -411,7 +418,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Udhampur");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -445,7 +452,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("West Singhbhum");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -484,7 +491,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Yadgir");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -507,7 +514,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Wayanad");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -526,7 +533,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Minicoy");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -586,7 +593,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Vidisha");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -631,7 +638,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Yavatmal");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -656,7 +663,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Ukhrul");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -676,7 +683,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("West Khasi Hills");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -693,7 +700,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Serchhip");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -713,7 +720,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Zunheboto");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -752,7 +759,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Sundargarh");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -766,7 +773,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Yanam");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -795,9 +802,10 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Sahibzada Ajit Singh Nagar (Mohali)");
             list.add("Sangrur");
             list.add("Tarn Taran");
+
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -839,7 +847,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Udaipur");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -852,7 +860,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("West Sikkim");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -892,7 +900,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Viluppuram");
             list.add("Virudhunagar");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_spinner_item, list);
+                    android.R.layout.simple_spinner_dropdown_item, list);
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
@@ -933,7 +941,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Yadadri Bhuvanagiri");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -950,7 +958,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("West Tripura");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -972,7 +980,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Uttarkashi");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -1057,7 +1065,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Varanasi");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -1087,7 +1095,7 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
             list.add("Uttar Dinajpur (North Dinajpur)");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
             dataAdapter.notifyDataSetChanged();
             distSpinner.setAdapter(dataAdapter);
         }
@@ -1096,10 +1104,12 @@ public class LocationChooser extends AppCompatActivity implements AdapterView.On
 
     }
 
-
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+       stateSpinner.onSaveInstanceState();
+       distSpinner.onSaveInstanceState();
     }
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {}
 
 }

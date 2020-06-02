@@ -17,7 +17,6 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/sp_recycler_image"
             android:layout_width="50dp"
-            android:src="@color/bg_screen1"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
             app:civ_border_color="#FF000000"

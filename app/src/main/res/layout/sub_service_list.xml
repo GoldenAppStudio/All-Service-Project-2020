@@ -20,7 +20,7 @@
             android:background="#fff"
             android:id="@+id/sub_service_image"
             android:layout_width="55dp"
-            android:src="@drawable/question" />
+            />
 
         <TextView
             android:layout_centerInParent="true"

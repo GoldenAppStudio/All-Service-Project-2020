@@ -50,11 +50,10 @@ public class AdClientData extends AppCompatActivity {
         progressDialog = new ProgressDialog(AdClientData.this, R.style.MyTheme);
         progressDialog.setMessage("Loading please wait...");
         progressDialog.show();
-      /*  StorageReference gsReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://serviceapp-67984.appspot.com/ads_images/" + String.valueOf(key) + ".jpg");
-        //StorageReference gsReference = storage.getReferenceFromUrl("gs://serviceapp-67984.appspot.com/service/Software Development.jpg");
+        StorageReference gsReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://serviceapp-project.appspot.com/ads_images/" + key + ".jpg");
         gsReference.getDownloadUrl().addOnSuccessListener(uri -> Glide.with(AdClientData.this).load(uri.toString()).into(circleImageView)).addOnFailureListener(exception -> {
             // Handle any errors
-        });*/
+        });
         databaseReference = FirebaseDatabase.getInstance().getReference("ShowAd/" + String.valueOf(key));
 
         databaseReference.addValueEventListener(new ValueEventListener() {

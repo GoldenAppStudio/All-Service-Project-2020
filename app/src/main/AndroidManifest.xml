@@ -14,51 +14,67 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AdClientData" />
-        <activity android:name=".BusChooser" />
-        <activity android:name=".BusFull" />
-        <activity android:name=".BusActivity" />
+        <activity android:name=".AdClientData"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".BusChooser"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".BusFull"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".BusActivity"
+            android:screenOrientation="portrait"/>
         <!--
  <activity
             android:name=".ui.login.BusActivity"
             android:label="@string/title_activity_bus" />
         -->
-        <activity android:name=".RequestPending" />
+        <activity android:name=".RequestPending"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:screenOrientation="fullSensor"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".GoldenAppStudio" />
+        <activity android:name=".GoldenAppStudio"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ServiceProviderList"
-            android:parentActivityName=".SubServiceActivity" />
+            android:parentActivityName=".SubServiceActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".LocationChooser"
-            android:parentActivityName=".SubServiceActivity" />
+            android:parentActivityName=".SubServiceActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".BusChooserActivity"
-            android:parentActivityName=".TravelActivity" />
+            android:parentActivityName=".TravelActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".TravelActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SubServiceActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ServiceProviderProfile"
-            android:parentActivityName=".ServiceProviderList" />
+            android:parentActivityName=".ServiceProviderList"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ServiceProviderRegistration"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".LoginActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Welcome"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SplashScreen"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -68,6 +84,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -75,6 +92,26 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+
+
+        <service android:name=".GettingDeviceTokenService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANT_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/app_logo" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/sky" />
     </application>
 
 </manifest>

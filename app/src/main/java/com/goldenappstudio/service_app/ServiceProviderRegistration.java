@@ -1,10 +1,5 @@
 package com.goldenappstudio.service_app;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -20,6 +15,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -63,6 +63,7 @@ public class ServiceProviderRegistration extends AppCompatActivity implements Ad
     private StorageReference storageReference;
     private DatabaseReference database = FirebaseDatabase.getInstance().getReference("service_providers");
     String key = database.push().getKey();
+    String _subService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,14 +92,33 @@ public class ServiceProviderRegistration extends AppCompatActivity implements Ad
         progressDialog.setMessage("Loading please wait...");
         progressDialog.show();
 
+        progressDialog.setCancelable(false);
         stateSpinner.setOnItemSelectedListener(this);
         serviceSpinner.setOnItemSelectedListener(this);
 
-        sub_service_list.add("Choose Sub-Service");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(ServiceProviderRegistration.this, android.R.layout.simple_spinner_item, sub_service_list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        subServiceSpinner.setAdapter(dataAdapter);
+        serviceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                populate_sub_service_list();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        stateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                populate_district_list();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         populate_service_list();
 
         registrationSubmit.setOnClickListener(view -> {
@@ -138,7 +158,7 @@ public class ServiceProviderRegistration extends AppCompatActivity implements Ad
                     db.child("PendingRequests").child(key).child("phone").setValue(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
 
                     storeFirestore(null);
-
+                  //  Toast.makeText(this, "" + subServiceSpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
                 }
 
             } else Toast.makeText(this, "Please make sure you fill all the form and select everything", Toast.LENGTH_SHORT).show();
@@ -147,7 +167,7 @@ public class ServiceProviderRegistration extends AppCompatActivity implements Ad
         circleImageView.setOnClickListener(v -> {
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                 if(ContextCompat.checkSelfPermission(ServiceProviderRegistration.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-                    Toast.makeText(ServiceProviderRegistration.this, "Permission Denied", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ServiceProviderRegistration.this, "Permission Allowed", Toast.LENGTH_LONG).show();
                     ActivityCompat.requestPermissions(ServiceProviderRegistration.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
                 } else BringImagePicker();
             } else BringImagePicker();
@@ -157,7 +177,6 @@ public class ServiceProviderRegistration extends AppCompatActivity implements Ad
     private void storeFirestore(@NonNull Task<UploadTask.TaskSnapshot> task) {
 
         download_uri = mainImageURI;
-        String login = FirebaseAuth.getInstance().getUid();
 
         Map<String, String> userMap = new HashMap<>();
         userMap.put("name", name.getText().toString().trim());
@@ -171,7 +190,7 @@ public class ServiceProviderRegistration extends AppCompatActivity implements Ad
         userMap.put("state", stateSpinner.getSelectedItem().toString().trim());
         userMap.put("district", districtSpinner.getSelectedItem().toString().trim());
         if(!company.getText().toString().isEmpty()) {
-            userMap.put("comapny", company.getText().toString().trim());
+            userMap.put("company", company.getText().toString().trim());
         }
 
         firebaseFirestore.collection("Users").document(key).set(userMap).addOnCompleteListener(task1 -> {
@@ -247,10 +266,8 @@ public class ServiceProviderRegistration extends AppCompatActivity implements Ad
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        populate_sub_service_list();
-        populate_district_list();
-    }
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { }
+
 
     private void populate_district_list() {
         String sp1= String.valueOf(stateSpinner.getSelectedItem());
@@ -1270,6 +1287,7 @@ public class ServiceProviderRegistration extends AppCompatActivity implements Ad
                            sub_service_list.add("" + db.child("ss_name").getValue().toString());
                            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(ServiceProviderRegistration.this, android.R.layout.simple_spinner_item, sub_service_list);
                            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                           dataAdapter.notifyDataSetChanged();
                            subServiceSpinner.setAdapter(dataAdapter);
                        }
                     }
@@ -1281,6 +1299,14 @@ public class ServiceProviderRegistration extends AppCompatActivity implements Ad
                 progressDialog.dismiss();
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        stateSpinner.onSaveInstanceState();
+        serviceSpinner.onSaveInstanceState();
+        subServiceSpinner.onSaveInstanceState();
+        districtSpinner.onSaveInstanceState();
     }
 
     @Override

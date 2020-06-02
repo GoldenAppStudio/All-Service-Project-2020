@@ -1,25 +1,15 @@
 package com.goldenappstudio.service_app;
 
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.Gravity;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,9 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.security.KeyStore;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class ServiceProviderList extends AppCompatActivity {
@@ -109,7 +97,7 @@ public class ServiceProviderList extends AppCompatActivity {
         //looping through existing elements
         for (ServiceProvider s : list) {
             //if the existing elements contains the search input
-            if (s.getName().toLowerCase().contains(text.toLowerCase())) {
+            if (s.getName().toLowerCase().contains(text.toLowerCase()) || s.getAddress().toLowerCase().contains(text.toLowerCase())) {
                 //adding the element to filtered list
                 filterdNames.add(s);
             }

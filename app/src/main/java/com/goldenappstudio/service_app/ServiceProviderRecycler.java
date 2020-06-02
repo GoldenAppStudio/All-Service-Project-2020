@@ -2,16 +2,13 @@ package com.goldenappstudio.service_app;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -51,9 +48,13 @@ public class ServiceProviderRecycler extends RecyclerView.Adapter<ServiceProvide
         holder.ServiceProviderName.setText(serviceProvider.getName());
         holder.ServiceProviderPhone.setText(String.format("+91 %s", serviceProvider.getPhone().substring(3)));
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference gsReference = storage.getReferenceFromUrl("gs://serviceapp-project.appspot.com/sub_service_images/" + SubServiceRecycler.SUB_SERVICE_UID + ".jpg");
+        StorageReference gsReference = storage.getReferenceFromUrl("gs://serviceapp-project.appspot.com/service_provider_images/" + serviceProvider.getUID() + ".jpg");
 
         gsReference.getDownloadUrl().addOnSuccessListener(uri -> Glide.with(context).load(uri.toString()).into(holder.ServiceProviderImage)).addOnFailureListener(exception -> {
+            StorageReference gs = storage.getReferenceFromUrl("gs://serviceapp-project.appspot.com/sub_service_images/" + SubServiceRecycler.SUB_SERVICE_UID + ".jpg");
+            gsReference.getDownloadUrl().addOnSuccessListener(uri -> Glide.with(context).load(uri.toString()).into(holder.ServiceProviderImage)).addOnFailureListener(e -> {
+                // Handle any errors
+            });
             // Handle any errors
         });
 
