@@ -21,6 +21,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
@@ -68,6 +69,8 @@ public class MainActivity extends AppCompatActivity
     List<Service> list = new ArrayList<>();
     private ProgressDialog progressDialog;
     Button showPopUp;
+
+     public static final Long[] image = new Long[1];
 
     ArrayList<String> appLaunchedArray;
     ArrayList<String> timeSpendOnApp;
@@ -612,7 +615,7 @@ public class MainActivity extends AppCompatActivity
         txtclose.setText("X");
         TextView pT = myDialog.findViewById(R.id.pT);
         TextView pB = myDialog.findViewById(R.id.pB);
-        final int[] image = new int[1];
+        final int[] key = new int[1];
 
         DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference("Today");
         firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -647,7 +650,8 @@ public class MainActivity extends AppCompatActivity
                     if(priorityList.get(i) < random && random < priorityList.get(i) + priorityList.get(i + 1)){
                         user.setText(dataSnapshot.child(String.valueOf(i+1)).child("name").getValue().toString());
                         pT.setText(dataSnapshot.child(String.valueOf(i+1)).child("shortDisc").getValue().toString());
-                        image[0] = i + 1;
+                        image[0] = (Long) dataSnapshot.child(String.valueOf(i+1)).child("id").getValue();
+                        key[0] = i + 1;
                     }
                 }
                StorageReference gsReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://serviceapp-project.appspot.com/ads_images/" + image[0] + ".jpg");
@@ -682,8 +686,10 @@ public class MainActivity extends AppCompatActivity
                 }
             });
 
+         //   Toast.makeText(this, "main " + image[0], Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MainActivity.this, AdClientData.class);
-             intent.putExtra("key", image[0]);
+             intent.putExtra("key", key[0]);
+             intent.putExtra("image_key", image[0]);
             startActivity(intent);
         });
 

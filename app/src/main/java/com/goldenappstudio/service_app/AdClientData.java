@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +32,7 @@ public class AdClientData extends AppCompatActivity {
     DatabaseReference databaseReference;
     String mCall, mAddress, mMail, mWeb;
     private int key;
+    private int image_key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class AdClientData extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             key = extras.getInt("key");
+            image_key = extras.getInt("image_key");
         }
         call = findViewById(R.id.AdCall); mail = findViewById(R.id.AdMail);
         address = findViewById(R.id.AdAddress); web = findViewById(R.id.AdWeb);
@@ -50,11 +53,11 @@ public class AdClientData extends AppCompatActivity {
         progressDialog = new ProgressDialog(AdClientData.this, R.style.MyTheme);
         progressDialog.setMessage("Loading please wait...");
         progressDialog.show();
-        StorageReference gsReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://serviceapp-project.appspot.com/ads_images/" + key + ".jpg");
+        StorageReference gsReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://serviceapp-project.appspot.com/ads_images/" + MainActivity.image[0] + ".jpg");
         gsReference.getDownloadUrl().addOnSuccessListener(uri -> Glide.with(AdClientData.this).load(uri.toString()).into(circleImageView)).addOnFailureListener(exception -> {
             // Handle any errors
         });
-        databaseReference = FirebaseDatabase.getInstance().getReference("ShowAd/" + String.valueOf(key));
+        databaseReference = FirebaseDatabase.getInstance().getReference("ShowAd/" + key);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
