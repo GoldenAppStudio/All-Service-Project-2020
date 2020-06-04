@@ -38,7 +38,7 @@ public class BusAdapter extends RecyclerView.Adapter<BusAdapter.ViewHolder>{
         holder.time.setText(String.format("%s - %s", studentDetails.getStart(), studentDetails.getEnd()));
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), BusFull.class);
-            intent.putExtra("link", BusActivity.Database_Path + "/" + studentDetails.getUid());
+            intent.putExtra("link", studentDetails.getStart() + "/" + studentDetails.getEnd() + "/" + studentDetails.getUid());
             context.startActivity(intent);
         });
     }

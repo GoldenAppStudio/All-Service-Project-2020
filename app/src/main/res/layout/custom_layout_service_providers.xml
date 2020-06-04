@@ -17,6 +17,7 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/sp_recycler_image"
             android:layout_width="50dp"
+            android:src="@drawable/service_provider_default"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
             app:civ_border_color="#FF000000"
@@ -37,7 +38,7 @@
                 android:textColor="#444"
                 android:typeface="sans"
                 android:layout_marginStart="10dp"
-                android:text="hello world"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
@@ -47,7 +48,7 @@
                 android:textColor="#999"
                 android:typeface="sans"
                 android:layout_marginStart="10dp"
-                android:text="+91 0000000000"
+                android:text=""
                 android:textSize="15sp" />
         </LinearLayout>
 

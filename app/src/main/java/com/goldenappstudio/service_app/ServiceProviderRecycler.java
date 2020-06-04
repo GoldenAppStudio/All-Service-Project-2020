@@ -46,7 +46,7 @@ public class ServiceProviderRecycler extends RecyclerView.Adapter<ServiceProvide
 
         final ServiceProvider serviceProvider = MainImageUploadInfoList.get(position);
         holder.ServiceProviderName.setText(serviceProvider.getName());
-        holder.ServiceProviderPhone.setText(String.format("+91 %s", serviceProvider.getPhone().substring(3)));
+        holder.ServiceProviderPhone.setText(String.format("%s", serviceProvider.getAddress()));
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference gsReference = storage.getReferenceFromUrl("gs://serviceapp-project.appspot.com/service_provider_images/" + serviceProvider.getUID() + ".jpg");
 
