@@ -27,7 +27,9 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:orientation="vertical"
+
             android:layout_centerVertical="true"
+            android:layout_marginEnd="3dp"
             android:layout_toEndOf="@+id/sp_recycler_image"
             android:layout_height="wrap_content" >
 
@@ -47,8 +49,9 @@
                 android:layout_height="wrap_content"
                 android:textColor="#999"
                 android:typeface="sans"
+                android:layout_marginEnd="5dp"
                 android:layout_marginStart="10dp"
-                android:text=""
+                android:text="main market hisar main market hisar main market bhiwani  main maekete"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -57,6 +60,7 @@
             android:id="@+id/sp_recycler_call"
             android:layout_width="32dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginStart="5dp"
             android:layout_centerVertical="true"
             android:background="@drawable/call_icon"
             android:layout_height="32dp"

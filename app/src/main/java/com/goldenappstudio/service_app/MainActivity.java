@@ -341,6 +341,14 @@ public class MainActivity extends AppCompatActivity
         else if(id == R.id.nav_notification) {
             notificationDiaglog(MainActivity.this);
         }
+        else if(id == R.id.logout_user) {
+            if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+                FirebaseAuth.getInstance().signOut();
+                Toast.makeText(this, "You have been logged out.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "You are not logged in.", Toast.LENGTH_SHORT).show();
+            }
+        }
         else if (id == R.id.nav_rate_us) {
             try{
                 startActivity(new Intent(Intent.ACTION_VIEW,
